@@ -1,2 +1,20 @@
-# multi-platform-realtime-price-hunter
-realtime pricing across multiple platforms for buying and selling computer parts
+MAB AI Matrix PanelAn Ultra-Precise Real-Time Hardware Value EngineThe MAB AI Matrix Panel is an enterprise-grade, asynchronous search orchestrator designed to track, evaluate, and visualize secondhand computer hardware pricing in absolute real-time. By abandoning stale training data and expensive commercial scraping APIs, this matrix leverages zero-cost scraping and Google Search Grounding to generate an accurate, live-market consensus across 10 distinct peer-to-peer and retail platforms.🚀 Core Architecture & Features1. Zero-Cost Live Scraping EngineBypasses premium API gateways (like ScrapingBee or Bright Data) by utilizing direct httpx async calls, JSON parsing, and targeted DOM extraction for 10 distinct marketplaces.r/HardwareSwap: Direct JSON ingestion for peer-to-peer baselines.Amazon Renewed: Standard scraping for retail refurbished ceilings.Micro Center (Open Box): Header injection with dynamic storeID targeting for local inventory validation.Other Seeded Nodes: eBay, Craigslist, FB Marketplace, Mercari, OfferUp, Swappa, and Back Market.2. Gemini-Powered Market IntelligenceIntegrated with the Gemini 2.5 Flash API using an automatic exponential backoff mechanism ($2^n$) to handle rate limits gracefully.Deep Market Value Analysis: Dynamically evaluates active matrix nodes, calculates true valuation baselines, flags poor deals, and identifies high-margin arbitrage opportunities.Negotiation Offer Draft Generator: On-demand agent that crafts context-aware, copy-pasteable messages to sellers based on targeted platform rules and negotiation styles (Respectful, Assertive, Budget)."Office Setup / GPU Focus" Chatbot: A modular Retrieval-Augmented Generation (RAG) assistant for resolving workstation bottlenecks, PCIe lane configurations, and power/thermal constraints.3. Premium UI/UX ImplementationA strict departure from standard SaaS aesthetics. The UI reclaims maximum viewport real estate for data analysis.Visual Identity: Superdark gradient navy background featuring multi-colored metallic 3D geometrics and sharp double-beveled frames.Strict Constraints: Zero glassmorphism. Zero blurred translucent backgrounds.Diagnostic Console: All scraper threads, retry trackers, and system logs are consolidated into a bottom-anchored, collapsible interactive modal.🛠️ Tech StackFrontend: React, TypeScript, Tailwind CSS (Custom MAB AI Metallic Theme)Backend Orchestration: Python, FastAPI, asyncio, httpx, BeautifulSoup4AI Integration: Official google-genai SDK (Gemini 2.5 Flash Preview)State Management: Local volatile-LRU cache (Optional Redis expansion)⚙️ Deployment & Setup GuideEnsure you are executing these commands in the correct working directories.1. Clone & Isolate the EnvironmentBash# Path: ~/
+git clone https://github.com/your-org/mab-ai-matrix.git
+cd ~/mab-ai-matrix
+2. Configure Backend EngineBash# Path: ~/mab-ai-matrix/backend
+python3 -m venv venv
+source venv/bin/activate
+pip install fastapi uvicorn httpx beautifulsoup4 pydantic google-genai
+
+# Create your environment variables
+touch .env
+echo "GEMINI_API_KEY=your_production_key_here" >> .env
+3. Build the Frontend CanvasBash# Path: ~/mab-ai-matrix/frontend
+npm install
+npm install lucide-react clsx tailwind-merge
+
+# Start the development server
+npm run dev
+4. Execute Matrix ServerBash# Path: ~/mab-ai-matrix/backend
+uvicorn matrix_router:app --host 0.0.0.0 --port 8000 --reload
+📊 Operations & System LogicRouting Fallbacks:JSON/API Nodes (Reddit/r/HardwareSwap): Fails cleanly if Regex cannot isolate a distinct numerical dollar amount from [H] tags.Local Inventory Nodes (Micro Center): Defaults to web store/shipping pricing if the injected storeID returns a null inventory array.DOM Scraping Nodes (Amazon/eBay): If CAPTCHA gates are triggered, the engine immediately terminates that specific branch to prevent IP blacklisting, logging the error silently to the bottom modal.© 2026 MAB AI Strategies LLC.All rights, custom scraping methodologies, and codebase structures reserved. Built for internal agency operations and productized deployment.
